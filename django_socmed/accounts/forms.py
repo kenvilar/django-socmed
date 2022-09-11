@@ -188,17 +188,12 @@ class LoginForm(forms.Form):
             self.user = user
         else:
             auth_method = app_settings.AUTHENTICATION_METHOD
-            if (
-                auth_method
-                == app_settings.app_settings.AuthenticationMethod.USERNAME_EMAIL
-            ):
+            if auth_method == app_settings.AuthenticationMethod.USERNAME_EMAIL:
                 login = self.cleaned_data["login"]
                 if self._is_login_email(login):
-                    auth_method = app_settings.app_settings.AuthenticationMethod.EMAIL
+                    auth_method = app_settings.AuthenticationMethod.EMAIL
                 else:
-                    auth_method = (
-                        app_settings.app_settings.AuthenticationMethod.USERNAME
-                    )
+                    auth_method = app_settings.AuthenticationMethod.USERNAME
             raise forms.ValidationError(
                 self.error_messages["%s_password_mismatch" % auth_method]
             )
