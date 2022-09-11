@@ -74,7 +74,7 @@
             <div class="nav-item ms-auto">
               {# URL provided by django-allauth/account/urls.py #}
               <a class="nav-link" href="{% url 'account_logout' %}">
-                Hello {{ request.user.name }},
+                Hello {{ request.user.username }},
                 {% translate "Sign Out" %}
               </a>
             </div>
