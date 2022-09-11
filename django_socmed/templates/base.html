@@ -48,17 +48,20 @@
               aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'dashboard' %}">Bookmarks</a>
+      <a class="navbar-brand" href="javascript:void(0)">Bookmarks</a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard <span class="visually-hidden">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">About</a>
-          </li>
           {% if request.user.is_authenticated %}
+            <li class="nav-item {% if section == "dashboard" %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">Dashboard <span class="visually-hidden">(current)</span></a>
+            </li>
+            <li class="nav-item {% if section == "images" %}active{% endif %}">
+              <a class="nav-link" href="javascript:void(0)">Images</a>
+            </li>
+            <li class="nav-item {% if section == "people" %}active{% endif %}">
+              <a class="nav-link" href="javascript:void(0)">People</a>
+            </li>
             <li class="nav-item">
               {# URL provided by django-allauth/account/urls.py #}
               <a class="nav-link" href="{% url 'users:detail' request.user.username %}">{% translate "My Profile" %}</a>
