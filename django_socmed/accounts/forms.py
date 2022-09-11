@@ -1,20 +1,6 @@
-from __future__ import absolute_import
-
 import warnings
 from importlib import import_module
 
-from django import forms
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.contrib.sites.shortcuts import get_current_site
-from django.core import exceptions, validators
-from django.urls import reverse
-from django.utils.translation import gettext, gettext_lazy as _, pgettext
-
-from allauth.utils import (
-    build_absolute_uri,
-    get_username_max_length,
-    set_form_field_order,
-)
 from allauth.account import app_settings
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
@@ -29,13 +15,24 @@ from allauth.account.utils import (
     user_pk_to_url_str,
     user_username,
 )
+from allauth.utils import (
+    build_absolute_uri,
+    get_username_max_length,
+    set_form_field_order,
+)
+from django import forms
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core import exceptions, validators
+from django.urls import reverse
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext
 
 
 class EmailAwarePasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
-        ret = super(EmailAwarePasswordResetTokenGenerator, self)._make_hash_value(
-            user, timestamp
-        )
+        ret = super()._make_hash_value(user, timestamp)
         sync_user_email_addresses(user)
         email = user_email(user)
         emails = set([email] if email else [])
@@ -49,9 +46,9 @@ class EmailAwarePasswordResetTokenGenerator(PasswordResetTokenGenerator):
 default_token_generator = EmailAwarePasswordResetTokenGenerator()
 
 
-class PasswordVerificationMixin(object):
+class PasswordVerificationMixin:
     def clean(self):
-        cleaned_data = super(PasswordVerificationMixin, self).clean()
+        cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
         if (password1 and password2) and password1 != password2:
@@ -71,17 +68,17 @@ class PasswordField(forms.CharField):
         autocomplete = kwargs.pop("autocomplete", None)
         if autocomplete is not None:
             kwargs["widget"].attrs["autocomplete"] = autocomplete
-        super(PasswordField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class SetPasswordField(PasswordField):
     def __init__(self, *args, **kwargs):
         kwargs["autocomplete"] = "new-password"
-        super(SetPasswordField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.user = None
 
     def clean(self, value):
-        value = super(SetPasswordField, self).clean(value)
+        value = super().clean(value)
         value = get_adapter().clean_password(value, user=self.user)
         return value
 
@@ -104,7 +101,7 @@ class LoginForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
-        super(LoginForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if (
             app_settings.AUTHENTICATION_METHOD
             == app_settings.AuthenticationMethod.EMAIL
@@ -182,7 +179,7 @@ class LoginForm(forms.Form):
         return ret
 
     def clean(self):
-        super(LoginForm, self).clean()
+        super().clean()
         if self._errors:
             return
         credentials = self.user_credentials()
@@ -303,7 +300,7 @@ class BaseSignupForm(_base_signup_form_class()):
         self.username_required = kwargs.pop(
             "username_required", app_settings.USERNAME_REQUIRED
         )
-        super(BaseSignupForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         username_field = self.fields["username"]
         username_field.max_length = get_username_max_length()
         username_field.validators.append(
@@ -367,7 +364,7 @@ class BaseSignupForm(_base_signup_form_class()):
         return get_adapter().validate_unique_email(value)
 
     def clean(self):
-        cleaned_data = super(BaseSignupForm, self).clean()
+        cleaned_data = super().clean()
         if app_settings.SIGNUP_EMAIL_ENTER_TWICE:
             email = cleaned_data.get("email")
             email2 = cleaned_data.get("email2")
@@ -376,7 +373,7 @@ class BaseSignupForm(_base_signup_form_class()):
         return cleaned_data
 
     def custom_signup(self, request, user):
-        custom_form = super(BaseSignupForm, self)
+        custom_form = super()
         if hasattr(custom_form, "signup") and callable(custom_form.signup):
             custom_form.signup(request, user)
         else:
@@ -392,7 +389,7 @@ class BaseSignupForm(_base_signup_form_class()):
 
 class SignupForm(BaseSignupForm):
     def __init__(self, *args, **kwargs):
-        super(SignupForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["password1"] = PasswordField(
             label=_("Password"), autocomplete="new-password"
         )
@@ -405,7 +402,7 @@ class SignupForm(BaseSignupForm):
             set_form_field_order(self, self.field_order)
 
     def clean(self):
-        super(SignupForm, self).clean()
+        super().clean()
 
         # `password` cannot be of type `SetPasswordField`, as we don't
         # have a `User` yet. So, let's populate a dummy user to be used
@@ -446,7 +443,7 @@ class SignupForm(BaseSignupForm):
 class UserForm(forms.Form):
     def __init__(self, user=None, *args, **kwargs):
         self.user = user
-        super(UserForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class AddEmailForm(UserForm):
@@ -500,7 +497,7 @@ class ChangePasswordForm(PasswordVerificationMixin, UserForm):
     password2 = PasswordField(label=_("New Password (again)"))
 
     def __init__(self, *args, **kwargs):
-        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["password1"].user = self.user
 
     def clean_oldpassword(self):
@@ -518,7 +515,7 @@ class SetPasswordForm(PasswordVerificationMixin, UserForm):
     password2 = PasswordField(label=_("Password (again)"))
 
     def __init__(self, *args, **kwargs):
-        super(SetPasswordForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["password1"].user = self.user
 
     def save(self):
@@ -610,7 +607,7 @@ class ResetPasswordKeyForm(PasswordVerificationMixin, forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)
         self.temp_key = kwargs.pop("temp_key", None)
-        super(ResetPasswordKeyForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["password1"].user = self.user
 
     def save(self):
@@ -638,7 +635,7 @@ class UserTokenForm(forms.Form):
             return None
 
     def clean(self):
-        cleaned_data = super(UserTokenForm, self).clean()
+        cleaned_data = super().clean()
 
         uidb36 = cleaned_data.get("uidb36", None)
         key = cleaned_data.get("key", None)
