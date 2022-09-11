@@ -1,4 +1,4 @@
-# Prject Name: Bookmark
+# Project Name: Bookmark
 
 Image Sharing Platform
 
