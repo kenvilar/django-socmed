@@ -78,10 +78,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
 ]
 
-LOCAL_APPS = [
-    "django_socmed.users",
-    # Your stuff: custom apps go here
-]
+LOCAL_APPS = ["django_socmed.users", "django_socmed.account"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
