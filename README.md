@@ -1,4 +1,4 @@
-# Django Socmed
+# Project Name: Bookmark
 
 Image Sharing Platform
 
