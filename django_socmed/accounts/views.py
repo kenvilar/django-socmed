@@ -24,7 +24,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -877,3 +877,8 @@ class EmailVerificationSentView(TemplateView):
 
 
 email_verification_sent = EmailVerificationSentView.as_view()
+
+
+@login_required
+def dashboard(request):
+    return render(request, "pages/dashboard.html", {"section": "dashboard"})
