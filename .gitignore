@@ -333,3 +333,4 @@ django_socmed/media/
 !.envs/.local/
 
 certs/*
+.idea
