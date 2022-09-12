@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "social_django",
 ]
 
 LOCAL_APPS = ["django_socmed.users", "django_socmed.accounts.apps.AccountsConfig"]
