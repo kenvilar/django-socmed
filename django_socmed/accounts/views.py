@@ -35,12 +35,15 @@ from .forms import (
     AddEmailForm,
     ChangePasswordForm,
     LoginForm,
+    ProfileEditForm,
     ResetPasswordForm,
     ResetPasswordKeyForm,
     SetPasswordForm,
     SignupForm,
+    UserEditForm,
     UserTokenForm,
 )
+from .models import Profile
 
 INTERNAL_RESET_SESSION_KEY = "_password_reset_key"
 
@@ -242,6 +245,7 @@ class SignupView(
         # By assigning the User to a property on the view, we allow subclasses
         # of SignupView to access the newly created User instance
         self.user = form.save(self.request)
+        Profile.objects.create(user=self.user)
         try:
             return complete_signup(
                 self.request,
@@ -882,3 +886,24 @@ email_verification_sent = EmailVerificationSentView.as_view()
 @login_required
 def dashboard(request):
     return render(request, "pages/dashboard.html", {"section": "dashboard"})
+
+
+@login_required
+def edit(request):
+    if request.method == "POST":
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(
+            instance=request.user.profile, data=request.POST, files=request.FILES
+        )
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+
+    return render(
+        request,
+        "account/edit.html",
+        {"user_form": user_form, "profile_form": profile_form},
+    )
