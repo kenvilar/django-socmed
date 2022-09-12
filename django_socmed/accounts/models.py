@@ -1,7 +1,6 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 
-User = get_user_model()
+from django_socmed.users.models import User
 
 
 class Profile(models.Model):
