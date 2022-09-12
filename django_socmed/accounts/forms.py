@@ -29,6 +29,8 @@ from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext
 
+from django_socmed.accounts.models import Profile, User
+
 
 class EmailAwarePasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
@@ -645,3 +647,15 @@ class UserTokenForm(forms.Form):
             raise forms.ValidationError(self.error_messages["token_invalid"])
 
         return cleaned_data
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "email")
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("date_of_birth", "photo")
