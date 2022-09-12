@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django_socmed.users.models import User
 
 
 class EmailAuthBackend:
@@ -6,7 +6,9 @@ class EmailAuthBackend:
     Authenticate using an email address.
     """
 
-    def authenticate(self, request, username=None, password=None):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        if username is None or password is None:
+            return
         try:
             user = User.objects.get(email=username)
             if user.check_password(password):
