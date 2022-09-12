@@ -23,6 +23,7 @@ from allauth.utils import get_form_class, get_request_param
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -892,15 +893,22 @@ def dashboard(request):
 def edit(request):
     if request.method == "POST":
         user_form = UserEditForm(instance=request.user, data=request.POST)
-        profile_form = ProfileEditForm(
-            instance=request.user.profile, data=request.POST, files=request.FILES
-        )
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
+        try:
+            profile_form = ProfileEditForm(
+                instance=request.user.profile, data=request.POST, files=request.FILES
+            )
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+        except ObjectDoesNotExist:
+            if user_form.is_valid():
+                user_form.save()
     else:
         user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
+        try:
+            profile_form = ProfileEditForm(instance=request.user.profile)
+        except ObjectDoesNotExist:
+            profile_form = False
 
     return render(
         request,
