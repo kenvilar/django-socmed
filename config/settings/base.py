@@ -328,3 +328,6 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+SOCIAL_AUTH_FACEBOOK_SCOPE = ["email"]
+SOCIAL_AUTH_FACEBOOK_KEY = "XXX"  # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = "XXX"  # Facebook App Secret

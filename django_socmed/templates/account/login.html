@@ -56,4 +56,12 @@
     <button class="primaryAction btn btn-primary" type="submit">{% translate "Sign In" %}</button>
   </form>
 
+  <div class="social pt-5">
+    <ul class="list-unstyled">
+      <li class="facebook">
+        <a class="btn btn-primary" href="{% url "social:begin" "facebook" %}">Sign in with Facebook</a>
+      </li>
+    </ul>
+  </div>
+
 {% endblock %}
