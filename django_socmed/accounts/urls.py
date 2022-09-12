@@ -42,5 +42,5 @@ urlpatterns = [
         views.password_reset_from_key_done,
         name="account_reset_password_from_key_done",
     ),
-    path("edit/", views.edit, name="edit"),
+    path("edit/", views.edit, name="account_edit"),
 ]
