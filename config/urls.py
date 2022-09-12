@@ -24,6 +24,7 @@ urlpatterns = [
     path("users/", include("django_socmed.users.urls", namespace="users")),
     path("accounts/", include("django_socmed.accounts.urls")),
     # Your stuff: custom urls includes go here
+    path("social-auth/", include("social_django.urls", namespace="social")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
