@@ -29,7 +29,8 @@ from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext
 
-from django_socmed.accounts.models import Profile, User
+from django_socmed.accounts.models import Profile
+from django_socmed.users.models import User
 
 
 class EmailAwarePasswordResetTokenGenerator(PasswordResetTokenGenerator):
@@ -652,7 +653,7 @@ class UserTokenForm(forms.Form):
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("name", "email")
+        fields = ("first_name", "last_name", "email")
 
 
 class ProfileEditForm(forms.ModelForm):
