@@ -56,10 +56,18 @@
     <button class="primaryAction btn btn-primary" type="submit">{% translate "Sign In" %}</button>
   </form>
 
-  <div class="social pt-5">
+  <div class="social pt-4">
     <ul class="list-unstyled">
-      <li class="facebook">
+      <li class="facebook py-1">
         <a class="btn btn-primary" href="{% url "social:begin" "facebook" %}">Sign in with Facebook</a>
+      </li>
+      <li class="twitter py-1">
+        <a class="btn btn-primary" href="{% url "social:begin" "twitter" %}">Login with Twitter</a>
+      </li>
+      <li class="google">
+        <a class="btn btn-primary" href="{% url "social:begin" "google-oauth2" %}">
+          Sign in with Google
+        </a>
       </li>
     </ul>
   </div>
