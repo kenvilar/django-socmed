@@ -1,5 +1,9 @@
 ARG PYTHON_VERSION=3.9-slim-bullseye
 
+RUN apt-get update &&  \
+    apt-get upgrade -y &&  \
+    apt-get install -y git
+
 # define an alias for the specfic python version used in this file.
 FROM python:${PYTHON_VERSION} as python
 
