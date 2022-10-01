@@ -341,6 +341,8 @@ if DEBUG:
     mimetypes.add_type("application/javascript", ".js", True)
     mimetypes.add_type("text/css", ".css", True)
 
+THUMBNAIL_DEBUG = True
+
 SOCIAL_AUTH_PIPELINE = [
     "social_core.pipeline.social_auth.social_details",
     "social_core.pipeline.social_auth.social_uid",
