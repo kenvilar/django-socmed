@@ -77,6 +77,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "drf_spectacular",
     "social_django",
+    "easy_thumbnails",
 ]
 
 LOCAL_APPS = [
