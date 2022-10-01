@@ -125,5 +125,13 @@
     </script>
     {% endcomment %}
 {% endblock inline_javascript %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    // DOM loaded
+    {% block domready %}
+    {% endblock %}
+  })
+</script>
 </body>
 </html>
