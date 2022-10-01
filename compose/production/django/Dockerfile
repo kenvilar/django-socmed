@@ -1,8 +1,8 @@
 ARG PYTHON_VERSION=3.9-slim-bullseye
 
-RUN apt-get update &&  \
-    apt-get upgrade -y &&  \
-    apt-get install -y git
+#RUN apt-get update &&  \
+#    apt-get upgrade -y &&  \
+#    apt-get install -y git
 
 
 
