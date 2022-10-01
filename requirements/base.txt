@@ -9,12 +9,12 @@ celery==5.2.7  # pyup: < 6.0  # https://github.com/celery/celery
 django-celery-beat==2.3.0  # https://github.com/celery/django-celery-beat
 flower==1.2.0  # https://github.com/mher/flower
 uvicorn[standard]==0.18.3  # https://github.com/encode/uvicorn
-#social-auth-app-django==5.0.0 # https://github.com/python-social-auth/social-app-django
+#social-auth-app-django==5.0.0  # https://github.com/python-social-auth/social-app-django
 git+https://github.com/python-social-auth/social-app-django.git@20fabcd7bd9a8a41910bc5c8ed1bd6ef2263b328
 asgiref==3.5.2
 sqlparse==0.4.2
 requests==2.28.1  # https://github.com/psf/requests
-easy-thumbnails==2.8.1  # https://github.com/SmileyChris/easy-thumbnails
+easy-thumbnails==2.8.3  # https://github.com/SmileyChris/easy-thumbnails
 
 # Django
 # ------------------------------------------------------------------------------
