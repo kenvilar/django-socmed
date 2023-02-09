@@ -25,11 +25,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import (
+    Http404,
+    HttpResponsePermanentRedirect,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateResponseMixin, TemplateView, View
 from django.views.generic.edit import FormView
 
@@ -45,7 +51,7 @@ from .forms import (
     UserEditForm,
     UserTokenForm,
 )
-from .models import Profile
+from .models import Contact, Profile
 
 INTERNAL_RESET_SESSION_KEY = "_password_reset_key"
 
@@ -934,3 +940,21 @@ def user_list(req):
 def user_detail(req, username):
     user = get_object_or_404(User, username=username, is_active=True)
     return render(req, "account/user/detail.html", {"section": "people", "user": user})
+
+
+@require_POST
+@login_required
+def user_follow(request):
+    user_id = request.POST.get("id")
+    action = request.POST.get("action")
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id)
+            if action == "follow":
+                Contact.objects.get_or_create(user_from=request.user, user_to=user)
+            else:
+                Contact.objects.filter(user_from=request.user, user_to=user).delete()
+            return JsonResponse({"status": "ok"})
+        except User.DoesNotExist:
+            return JsonResponse({"status": "error"})
+    return JsonResponse({"status": "error"})
