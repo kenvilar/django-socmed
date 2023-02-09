@@ -22,10 +22,11 @@ from allauth.exceptions import ImmediateHttpResponse
 from allauth.utils import get_form_class, get_request_param
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
@@ -921,3 +922,15 @@ def edit(request):
         "account/edit.html",
         {"user_form": user_form, "profile_form": profile_form},
     )
+
+
+@login_required
+def user_list(req):
+    users = User.objects.filter(is_active=True)
+    return render(req, "account/user/list.html", {"section": "people", "users": users})
+
+
+@login_required
+def user_detail(req, username):
+    user = get_object_or_404(User, username=username, is_active=True)
+    return render(req, "account/user/detail.html", {"section": "people", "user": user})
