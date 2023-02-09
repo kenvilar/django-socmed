@@ -65,7 +65,7 @@
               <a class="nav-link" href="{% url "images:list" %}">Images</a>
             </div>
             <div class="nav-item {% if section == "people" %}active{% endif %}">
-              <a class="nav-link" href="javascript:void(0)">People</a>
+              <a class="nav-link" href="{% url "user_list" %}">People</a>
             </div>
             <div class="nav-item">
               {# URL provided by django-allauth/account/urls.py #}
