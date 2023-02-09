@@ -85,6 +85,7 @@ LOCAL_APPS = [
     "django_socmed.users",
     "django_socmed.accounts.apps.AccountsConfig",
     "django_socmed.images.apps.ImagesConfig",
+    "django_socmed.actions.apps.ActionsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
