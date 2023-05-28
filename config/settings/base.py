@@ -4,6 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
+from django.urls import reverse_lazy
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # django_socmed/
@@ -84,6 +85,7 @@ LOCAL_APPS = [
     "django_socmed.users",
     "django_socmed.accounts.apps.AccountsConfig",
     "django_socmed.images.apps.ImagesConfig",
+    "django_socmed.actions.apps.ActionsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -365,3 +367,7 @@ SOCIAL_AUTH_TWITTER_SECRET = "XXX"  # Twitter API Secret
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "XXX"  # Google Client ID
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "XXX"  # Google Client Secret
+
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda u: reverse_lazy("user_detail", args=[u.username])
+}

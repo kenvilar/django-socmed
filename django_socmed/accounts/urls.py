@@ -43,4 +43,7 @@ urlpatterns = [
         name="account_reset_password_from_key_done",
     ),
     path("edit/", views.edit, name="account_edit"),
+    path("users/", views.user_list, name="user_list"),
+    path("users/follow/", views.user_follow, name="user_follow"),
+    path("users/<username>/", views.user_detail, name="user_detail"),
 ]
