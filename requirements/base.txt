@@ -14,7 +14,7 @@ social-auth-app-django==5.0.0  # https://github.com/python-social-auth/social-ap
 asgiref==3.5.2
 sqlparse==0.4.2
 requests==2.28.1  # https://github.com/psf/requests
-easy-thumbnails==2.8.3  # https://github.com/SmileyChris/easy-thumbnails
+easy-thumbnails==2.8.5  # https://github.com/SmileyChris/easy-thumbnails
 
 # Django
 # ------------------------------------------------------------------------------
