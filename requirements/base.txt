@@ -11,7 +11,7 @@ flower==1.2.0  # https://github.com/mher/flower
 uvicorn[standard]==0.22.0  # https://github.com/encode/uvicorn
 social-auth-app-django==5.0.0  # https://github.com/python-social-auth/social-app-django
 #git+https://github.com/python-social-auth/social-app-django.git@20fabcd7bd9a8a41910bc5c8ed1bd6ef2263b328
-asgiref==3.5.2
+asgiref==3.7.2
 sqlparse==0.4.4
 requests==2.28.1  # https://github.com/psf/requests
 easy-thumbnails==2.8.5  # https://github.com/SmileyChris/easy-thumbnails
