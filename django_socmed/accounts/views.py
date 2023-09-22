@@ -936,13 +936,13 @@ def edit(request):
 @login_required
 def user_list(req):
     users = User.objects.filter(is_active=True)
-    return render(req, "account/user/list.html", {"section": "people", "users": users})
+    return render(req, "account/list.html", {"section": "people", "users": users})
 
 
 @login_required
 def user_detail(req, username):
     user = get_object_or_404(User, username=username, is_active=True)
-    return render(req, "account/user/detail.html", {"section": "people", "user": user})
+    return render(req, "account/detail.html", {"section": "people", "user": user})
 
 
 @require_POST
