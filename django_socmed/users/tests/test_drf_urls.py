@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.urls import resolve, reverse
 
-from django_socmed.users.models import User
+# from django_socmed.users.models import User
+
+User = get_user_model()
 
 
 def test_user_detail(user: User):

@@ -66,3 +66,8 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 CELERY_TASK_EAGER_PROPAGATES = True
 CELERY_TASK_ALWAYS_EAGER = True
 # ------------------------------------------------------------------------------
+
+# Redis
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+REDIS_DB = 0

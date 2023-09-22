@@ -4,9 +4,8 @@ from importlib import import_module
 from allauth.account import app_settings
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
-from allauth.account.utils import (
+from allauth.account.utils import (  # get_user_model,
     filter_users_by_email,
-    get_user_model,
     perform_login,
     setup_user_email,
     sync_user_email_addresses,
@@ -21,6 +20,7 @@ from allauth.utils import (
     set_form_field_order,
 )
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import exceptions, validators
@@ -30,7 +30,10 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext
 
 from django_socmed.accounts.models import Profile
-from django_socmed.users.models import User
+
+# from django_socmed.users.models import User
+
+User = get_user_model()
 
 
 class EmailAwarePasswordResetTokenGenerator(PasswordResetTokenGenerator):

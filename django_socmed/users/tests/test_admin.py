@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from django_socmed.users.models import User
+# from django_socmed.users.models import User
+
+User = get_user_model()
 
 
 class TestUserAdmin:

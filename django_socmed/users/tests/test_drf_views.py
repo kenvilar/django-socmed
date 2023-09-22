@@ -1,7 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.test import RequestFactory
 
 from django_socmed.users.api.views import UserViewSet
-from django_socmed.users.models import User
+
+# from django_socmed.users.models import User
+
+User = get_user_model()
 
 
 class TestUserViewSet:

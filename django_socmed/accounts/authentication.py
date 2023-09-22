@@ -1,5 +1,10 @@
+from django.contrib.auth import get_user_model
+
 from django_socmed.accounts.models import Profile
-from django_socmed.users.models import User
+
+# from django_socmed.users.models import User
+
+User = get_user_model()
 
 
 class EmailAuthBackend:

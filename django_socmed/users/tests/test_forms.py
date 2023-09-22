@@ -1,10 +1,14 @@
 """
 Module for all Form Tests.
 """
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from django_socmed.users.forms import UserAdminCreationForm
-from django_socmed.users.models import User
+
+# from django_socmed.users.models import User
+
+User = get_user_model()
 
 
 class TestUserAdminCreationForm:

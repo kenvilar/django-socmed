@@ -21,8 +21,8 @@ from allauth.decorators import rate_limit
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.utils import get_form_class, get_request_param
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import (
@@ -52,6 +52,8 @@ from .forms import (
     UserTokenForm,
 )
 from .models import Contact, Profile
+
+User = get_user_model()
 
 INTERNAL_RESET_SESSION_KEY = "_password_reset_key"
 
@@ -898,6 +900,7 @@ def dashboard(request):
 
 @login_required
 def edit(request):
+    profile_form = None
     if request.method == "POST":
         user_form = UserEditForm(instance=request.user, data=request.POST)
         try:

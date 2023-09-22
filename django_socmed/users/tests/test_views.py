@@ -1,6 +1,7 @@
 import pytest
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -9,11 +10,12 @@ from django.test import RequestFactory
 from django.urls import reverse
 
 from django_socmed.users.forms import UserAdminChangeForm
-from django_socmed.users.models import User
 from django_socmed.users.tests.factories import UserFactory
 from django_socmed.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
+
+User = get_user_model()
 
 
 class TestUserUpdateView:
