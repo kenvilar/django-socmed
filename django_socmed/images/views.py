@@ -71,6 +71,7 @@ def image_list(request):
 def image_detail(request, id, slug):
     image = get_object_or_404(Image, id=id, slug=slug)
     total_views = r.incr(f"image:{image.id}:views")
+    r.zincrby("image_ranking", 1, image.id)
     return render(
         request,
         "images/image/detail.html",
